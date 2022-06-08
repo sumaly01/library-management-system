@@ -48,17 +48,16 @@ bookController.addBook = (name,author,genre) => {
 // }
 
 bookController.getBookByName = (name) => {
-    
+    // const book = []
     const allBooks = loadAllBooks()
     console.log(chalk.green.inverse('Getting the matched book name from all genres'))
     let bookFound = false
-    allBooks.forEach(books => {
-        const book = books.find((book) => book.name === name)
-        if(book){
-        console.log(book)
-        bookFound = true
-        }
-    })
+        allBooks.forEach((book) => {
+            if(book.name === name){
+                console.log(book)
+                bookFound = true
+            }
+        })
     if (!bookFound){
         console.log(chalk.red.inverse('No matching book name'))
     }
@@ -129,14 +128,14 @@ bookController.search = (name) => {
     const allBooks = loadAllBooks()
     console.log(chalk.green.inverse('Getting the matched book name from all genres'))
     let bookFound = false
-    for(books of allBooks){
-        const book = books.find((book) => book.name === name)
+    // for(books of allBooks){
+        const book = allBooks.find((book) => book.name === name)
         if(book){
             bookFound = true
             console.log(book)
-            break
+            // break
         }
-    }
+    // }
     if (!bookFound){
         console.log(chalk.red.inverse('No matching book name'))
     }
@@ -163,7 +162,7 @@ const loadAllBooks = () => {
     let booksArray = []
     arrayOfFiles.forEach(fileName => {
         fileName = fileName.split('.')[0]
-        booksArray.push(loadBooks(fileName))
+        booksArray = booksArray.concat(loadBooks(fileName))
     });
     return booksArray
     // console.log('booksArray',booksArray)
